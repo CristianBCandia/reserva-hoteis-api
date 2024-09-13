@@ -1,0 +1,71 @@
+spring:
+  application:
+    name: hoteis
+  mail:
+    host: sandbox.smtp.mailtrap.io
+    port: 587
+    username: ${MAIL_USERNAME:ad1e6e36b86487}
+    password: ${MAIL_PASSWORD:b2e9b1e2ebe243}
+    properties:
+      mail.transport.protocol: smtp
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+      mail.debug: true
+  sql:
+    init:
+      mode: always
+  datasource:
+    url: jdbc:postgresql://localhost:5432/reservas
+    username: user
+    password: pass
+    driver-class-name: org.postgresql.Driver
+  #    data: classpath:data.sql
+  jpa:
+    open-in-view: true
+    hibernate:
+      ddl-auto: create-drop
+      show-sql: true
+      enable_lazy_load_no_trans: true
+    properties:
+      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+  kafka:
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: grupo-notificacoes
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+    topics:
+      checkin: ${KAFKA_TOPIC_CHECKIN:checkin}
+      checkout: ${KAFKA_TOPIC_CHECKOUT:checkout}
+      confirmacao-reserva: ${KAFKA_TOPIC_CONFIRMACAO_RESERVA:confirmacao-reserva}
+      criacao-reserva: ${KAFKA_TOPIC_CRIACAO_RESERVA:criacao-reserva}
+      notificacao: ${KAFKA_TOPIC_NOTIFICACAO:notificacao}
+    groups:
+      checkin: ${KAFKA_GROUP_CHECKIN:checkin-group}
+      checkout: ${KAFKA_GROUP_CHECKOUT:checkout-group}
+      confirmacao-reserva: ${KAFKA_GROUP_CONFIRMACAO_RESERVA:confirmacao-reserva-group}
+      criacao-reserva: ${KAFKA_GROUP_CRIACAO_RESERVA:criacao-reserva-group}
+      notificacao: ${KAFKA_GROUP_NOTIFICACAO:notificacao-group}
+
+  cache:
+    type: redis
+    time-to-live: 60s
+  redis:
+    host: redis
+    port: 6379
+    serializers:
+      json:
+        enabled: true
+
+logging:
+  level:
+    org.springframework.jdbc: DEBUG
+    org.hibernate.SQL: DEBUG
+    org.springframework.cache: DEBUG
+    org.springframework.data.redis: DEBUG
+
+
