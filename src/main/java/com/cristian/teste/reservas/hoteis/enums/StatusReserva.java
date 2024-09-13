@@ -4,6 +4,4 @@ public enum StatusReserva {
     PENDENTE,
     CONFIRMADA,
     CHECKED_IN,
-    CHECKED_OUT,
-    CANCELADA;
-}
+    CHECKED_OUT;}

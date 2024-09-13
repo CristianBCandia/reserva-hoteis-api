@@ -67,14 +67,4 @@ public class NotificacaoService {
                         + " foi confirmada com sucesso")
                 .build();
     }
-
-//    private static NotificacaoDTO converterParaDto(Notificacao notificacao) {
-//        return new NotificacaoDTO(notificacao.getId(),
-//                notificacao.getReserva().getId(),
-//                notificacao.getEmailDestinatario(),
-//                notificacao.getEnviadaEm(),
-//                notificacao.getMensagem(),
-//                notificacao.isVisualizada(),
-//                notificacao.getTipoNotificacao());
-//    }
 }

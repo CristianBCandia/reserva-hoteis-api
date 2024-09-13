@@ -44,4 +44,3 @@ public class Notificacao {
         @Column(name = "tipo_notificacao", nullable = false)
         private TipoNotificacao tipoNotificacao;
 }
-

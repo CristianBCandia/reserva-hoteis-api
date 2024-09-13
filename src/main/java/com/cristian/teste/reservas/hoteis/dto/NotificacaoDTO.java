@@ -7,7 +7,6 @@ import java.time.LocalDateTime;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.hibernate.type.descriptor.java.spi.BasicCollectionJavaType;
 
 @Data
 @NoArgsConstructor

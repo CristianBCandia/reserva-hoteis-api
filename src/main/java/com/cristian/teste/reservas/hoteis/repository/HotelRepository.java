@@ -12,9 +12,6 @@ import java.util.List;
 @Repository
 public interface HotelRepository extends JpaRepository<Hotel, Long> {
 
-    @Query("SELECT h FROM Hotel h LEFT JOIN FETCH h.comodidades WHERE h.cidade = :cidade AND h.numeroDeQuartos = :numeroDeQuartos")
-    List<Hotel> findHoteisByCidadeAndNumeroDeQuartos(@Param("cidade") String cidade, @Param("numeroDeQuartos") int numeroDeQuartos);
-
     @Query("SELECT h FROM Hotel h WHERE h.cidade = :cidade AND h.numeroDeQuartos >= :numeroDeQuartos ORDER BY h.precoPorNoite ASC")
     List<Hotel> findHoteisByCidadeAndNumeroDeQuartosOrderByPrecoPorNoite(
             @Param("cidade") String cidade,

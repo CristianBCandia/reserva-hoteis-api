@@ -2,7 +2,6 @@ package com.cristian.teste.reservas.hoteis.consumer;
 
 import com.cristian.teste.reservas.hoteis.converter.NotificacaoConverter;
 import com.cristian.teste.reservas.hoteis.dto.NotificacaoDTO;
-import com.cristian.teste.reservas.hoteis.model.Notificacao;
 import com.cristian.teste.reservas.hoteis.service.NotificacaoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

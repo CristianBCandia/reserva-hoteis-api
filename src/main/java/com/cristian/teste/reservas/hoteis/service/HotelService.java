@@ -2,18 +2,14 @@ package com.cristian.teste.reservas.hoteis.service;
 
 import com.cristian.teste.reservas.hoteis.converter.HotelConverter;
 import com.cristian.teste.reservas.hoteis.dto.HotelDTO;
-import com.cristian.teste.reservas.hoteis.enums.HotelComparacaoCriterio;
 import com.cristian.teste.reservas.hoteis.exception.CriterioInvalidoException;
 import com.cristian.teste.reservas.hoteis.model.Hotel;
 import com.cristian.teste.reservas.hoteis.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,8 +18,6 @@ import java.util.Optional;
 public class HotelService {
 
     private final HotelRepository hotelRepository;
-
-    private final JdbcTemplate jdbcTemplate;
 
     @Transactional
     public Hotel adicionarHotel(Hotel hotel) {
