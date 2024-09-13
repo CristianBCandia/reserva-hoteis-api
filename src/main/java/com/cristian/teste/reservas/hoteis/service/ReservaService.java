@@ -9,6 +9,7 @@ import com.cristian.teste.reservas.hoteis.model.Reserva;
 import com.cristian.teste.reservas.hoteis.producer.ReservaProducer;
 import com.cristian.teste.reservas.hoteis.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
+import org.apache.kafka.common.errors.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -84,7 +85,7 @@ public class ReservaService {
         return ReservaConverter.dto(reservaRepository.findById(id)
                 .orElseThrow(()-> {
                     logger.info("Reserva de id {}, não encontrada!", id);
-                    return new RuntimeException("Reserva não encontrada!");
+                    return new ResourceNotFoundException("Reserva não encontrada!");
                 }));
     }
 
