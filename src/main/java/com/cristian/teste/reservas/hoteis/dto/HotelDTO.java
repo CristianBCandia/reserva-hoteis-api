@@ -11,6 +11,8 @@ public record HotelDTO (
         String cidade,
         String endereco,
         double precoPorNoite,
+        int numeroDeQuartos,
+        int numeroDeHospedes,
         List<ComodidadeDTO> comodidades,
         double avaliacao
 ){}

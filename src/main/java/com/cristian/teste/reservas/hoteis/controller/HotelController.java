@@ -1,7 +1,5 @@
 package com.cristian.teste.reservas.hoteis.controller;
 import com.cristian.teste.reservas.hoteis.dto.HotelDTO;
-import com.cristian.teste.reservas.hoteis.exception.HotelNaoEncontradoException;
-import com.cristian.teste.reservas.hoteis.model.Hotel;
 import com.cristian.teste.reservas.hoteis.service.HotelService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,22 +20,20 @@ public class HotelController {
 
     @PostMapping
     @CacheEvict(value = "hotelDetalhes", key = "#hotel.id")
-    public Hotel adicionarHotel(@RequestBody Hotel hotel) {
+    public HotelDTO adicionarHotel(@RequestBody HotelDTO hotel) {
         return hotelService.adicionarHotel(hotel);
     }
 
     @GetMapping("/{id}")
     @Cacheable(value = "hotelDetalhes", key = "#id")
-    public Hotel buscarHotel(@PathVariable Long id) {
-        return hotelService.buscarHotel(id)
-                .orElseThrow(() -> new HotelNaoEncontradoException("Hotel não encontrado para o id " + id));
+    public HotelDTO buscarHotel(@PathVariable Long id) {
+        return hotelService.buscarHotel(id);
     }
 
     @PutMapping("/{id}")
     @CacheEvict(value = "hotelDetalhes", key = "#id")
-    public Hotel atualizarHotel(@PathVariable Long id, @RequestBody Hotel hotelAtualizado) {
-        return hotelService.atualizarHotel(id, hotelAtualizado)
-                .orElseThrow(() -> new HotelNaoEncontradoException("Hotel não encontrado para o id " + id));
+    public HotelDTO atualizarHotel(@PathVariable Long id, @RequestBody HotelDTO hotelAtualizado) {
+        return hotelService.atualizarHotel(id, hotelAtualizado);
     }
 
     @GetMapping("/pesquisar")

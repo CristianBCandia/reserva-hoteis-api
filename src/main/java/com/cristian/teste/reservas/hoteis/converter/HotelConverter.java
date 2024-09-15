@@ -16,6 +16,8 @@ public class HotelConverter {
                 hotel.getCidade(),
                 hotel.getEndereco(),
                 hotel.getPrecoPorNoite(),
+                hotel.getNumeroDeQuartos(),
+                hotel.getNumeroDeHospedes(),
                 hotel.getComodidades().stream().map(ComodidadeConverter::dto).collect(Collectors.toList()),
                 hotel.getAvaliacao()
         );
@@ -26,7 +28,21 @@ public class HotelConverter {
         return Hotel.builder()
                 .id(hotel.id())
                 .nome(hotel.nome())
+                .numeroDeHospedes(hotel.numeroDeQuartos())
+                .numeroDeQuartos(hotel.numeroDeQuartos())
                 .cidade(hotel.cidade())
+                .comodidades(hotel.comodidades().stream().map(ComodidadeConverter::entidade).collect(Collectors.toList()))
+                .build();
+    }
+
+    public static Hotel entidade(HotelDTO hotel, Long id) {
+        if(hotel == null) return null;
+        return Hotel.builder()
+                .id(id)
+                .nome(hotel.nome())
+                .cidade(hotel.cidade())
+                .numeroDeHospedes(hotel.numeroDeQuartos())
+                .numeroDeQuartos(hotel.numeroDeQuartos())
                 .comodidades(hotel.comodidades().stream().map(ComodidadeConverter::entidade).collect(Collectors.toList()))
                 .build();
     }
