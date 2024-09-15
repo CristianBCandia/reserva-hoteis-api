@@ -36,22 +36,6 @@ services:
     ports:
       - "6379:6379"
 
-  localstack:
-    image: localstack/localstack:1.3.1
-    environment:
-      - AWS_DEFAULT_REGION=sa-east-1
-      - AWS_ACCESS_KEY_ID=teste
-      - AWS_SECRET_ACCESS_KEY=teste
-      - EDGE_PORT=4566
-      - DATA_DIR=${DATA_DIR-}
-      - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
-      - DOCKER_HOST=unix:///var/run/docker.sock
-    ports:
-      - '4566-4587:4566-4587'
-    volumes:
-      - localstack-data:/tmp/localstack
-      - "/var/run/docker.sock:/var/run/docker.sock"
-
   prometheus:
     image: prom/prometheus
     volumes:
