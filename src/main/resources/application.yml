@@ -1,43 +1,69 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: ${MANAGEMENT_ENDPOINTS_EXPOSURE_INCLUDE:prometheus,health,info}
+  metrics:
+    export:
+      prometheus:
+        enabled: ${METRICS_EXPORT_PROMETHEUS_ENABLED:true}
+  endpoint:
+    prometheus:
+      enabled: ${ENDPOINT_PROMETHEUS_ENABLED:true}
+
 spring:
   application:
-    name: hoteis
+    name: ${SPRING_APPLICATION_NAME:hotel-reservas}
   mail:
-    host: sandbox.smtp.mailtrap.io
-    port: 587
+    host: ${MAIL_HOST:sandbox.smtp.mailtrap.io}
+    port: ${MAIL_PORT:587}
     username: ${MAIL_USERNAME:ad1e6e36b86487}
     password: ${MAIL_PASSWORD:b2e9b1e2ebe243}
     properties:
-      mail.transport.protocol: smtp
-      mail.smtp.auth: true
-      mail.smtp.starttls.enable: true
-      mail.debug: true
+      mail.transport.protocol: ${MAIL_TRANSPORT_PROTOCOL:smtp}
+      mail.smtp.auth: ${MAIL_SMTP_AUTH:true}
+      mail.smtp.starttls.enable: ${MAIL_SMTP_STARTTLS_ENABLE:true}
+      mail.debug: ${MAIL_DEBUG:true}
+  datasource:
+    url: ${DATASOURCE_URL:jdbc:postgresql://localhost:5432/reservas}
+    username: ${DATASOURCE_USERNAME:user}
+    password: ${DATASOURCE_PASSWORD:pass}
+    driver-class-name: ${DATASOURCE_DRIVER_CLASS_NAME:org.postgresql.Driver}
+  jpa:
+    open-in-view: ${JPA_OPEN_IN_VIEW:true}
+    hibernate:
+      ddl-auto: ${JPA_HIBERNATE_DDL_AUTO:create-drop}
+      show-sql: ${JPA_HIBERNATE_SHOW_SQL:true}
+      enable_lazy_load_no_trans: ${JPA_HIBERNATE_LAZY_LOAD_NO_TRANS:true}
+    properties:
+      hibernate.dialect: ${JPA_HIBERNATE_DIALECT:org.hibernate.dialect.PostgreSQLDialect}
   sql:
     init:
-      mode: always
-  datasource:
-    url: jdbc:postgresql://localhost:5432/reservas
-    username: user
-    password: pass
-    driver-class-name: org.postgresql.Driver
-  #    data: classpath:data.sql
-  jpa:
-    open-in-view: true
-    hibernate:
-      ddl-auto: create-drop
-      show-sql: true
-      enable_lazy_load_no_trans: true
-    properties:
-      hibernate.dialect: org.hibernate.dialect.PostgreSQLDialect
+      mode: ${SPRING_SQL_INIT_MODE:always}
+
   kafka:
-    bootstrap-servers: localhost:9092
+    bootstrap-servers: ${KAFKA_BOOTSTRAP_SERVERS:localhost:9092}
     consumer:
-      group-id: grupo-notificacoes
-      auto-offset-reset: earliest
-      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
-      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      group-id: ${KAFKA_CONSUMER_GROUP_ID:grupo-notificacoes}
+      auto-offset-reset: ${KAFKA_CONSUMER_AUTO_OFFSET_RESET:earliest}
+      key-deserializer: ${KAFKA_CONSUMER_KEY_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+      value-deserializer: ${KAFKA_CONSUMER_VALUE_DESERIALIZER:org.apache.kafka.common.serialization.StringDeserializer}
+      properties:
+        max.poll.interval.ms: ${KAFKA_CONSUMER_MAX_POLL_INTERVAL_MS:300000}
+        enable.auto.commit: ${KAFKA_CONSUMER_ENABLE_AUTO_COMMIT:false}
+        retry:
+          max-attempts: ${KAFKA_CONSUMER_RETRY_MAX_ATTEMPTS:3}
+      listener:
+        ack-mode: ${KAFKA_CONSUMER_LISTENER_ACK_MODE:manual}
+      dlq:
+        criacao-reserva: ${KAFKA_DLQ_CRIACAO_RESERVA:criacao-reserva-dlq}
+        confirmacao-reserva: ${KAFKA_DLQ_CONFIRMACAO_RESERVA:confirmacao-reserva-dlq}
+        checkin: ${KAFKA_DLQ_CHECKIN:checkin-dlq}
+        checkout: ${KAFKA_DLQ_CHECKOUT:checkout-dlq}
     producer:
-      key-serializer: org.apache.kafka.common.serialization.StringSerializer
-      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+      key-serializer: ${KAFKA_PRODUCER_KEY_SERIALIZER:org.apache.kafka.common.serialization.StringSerializer}
+      value-serializer: ${KAFKA_PRODUCER_VALUE_SERIALIZER:org.apache.kafka.common.serialization.StringSerializer}
+      retries: ${KAFKA_PRODUCER_RETRIES:3}
     topics:
       checkin: ${KAFKA_TOPIC_CHECKIN:checkin}
       checkout: ${KAFKA_TOPIC_CHECKOUT:checkout}
@@ -52,20 +78,20 @@ spring:
       notificacao: ${KAFKA_GROUP_NOTIFICACAO:notificacao-group}
 
   cache:
-    type: redis
-    time-to-live: 60s
+    type: ${CACHE_TYPE:redis}
+    time-to-live: ${CACHE_TTL:60s}
   redis:
-    host: redis
-    port: 6379
+    host: ${REDIS_HOST:redis}
+    port: ${REDIS_PORT:6379}
     serializers:
       json:
-        enabled: true
+        enabled: ${REDIS_JSON_SERIALIZER_ENABLED:true}
 
 logging:
+  logstash:
+    url: ${LOGSTASH_URL:http://localhost:5044}
   level:
-    org.springframework.jdbc: DEBUG
-    org.hibernate.SQL: DEBUG
-    org.springframework.cache: DEBUG
-    org.springframework.data.redis: DEBUG
-
-
+    org.springframework.jdbc: ${LOGGING_LEVEL_SPRING_JDBC:DEBUG}
+    org.hibernate.SQL: ${LOGGING_LEVEL_HIBERNATE_SQL:DEBUG}
+    org.springframework.cache: ${LOGGING_LEVEL_SPRING_CACHE:DEBUG}
+    org.springframework.data.redis: ${LOGGING_LEVEL_SPRING_REDIS:DEBUG}

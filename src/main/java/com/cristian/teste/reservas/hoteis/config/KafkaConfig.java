@@ -56,5 +56,6 @@ public class KafkaConfig {
         props.put(JsonDeserializer.VALUE_DEFAULT_TYPE, ReservaDTO.class.getName());
         return new DefaultKafkaConsumerFactory<>(props, new StringDeserializer(), new JsonDeserializer<>(ReservaDTO.class));
     }
+
 }
 

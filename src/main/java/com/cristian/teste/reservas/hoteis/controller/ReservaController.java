@@ -20,6 +20,7 @@ public class ReservaController {
 
     @GetMapping("/{id}")
     public ReservaDTO buscarReservaPorId(@PathVariable Long id) {
+        logger.info("Buscando reservas por id {}", id);
         return reservaService.buscaReservaPorId(id);
     }
 
