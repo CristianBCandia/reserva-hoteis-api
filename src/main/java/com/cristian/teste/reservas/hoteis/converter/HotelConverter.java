@@ -28,8 +28,11 @@ public class HotelConverter {
         return Hotel.builder()
                 .id(hotel.id())
                 .nome(hotel.nome())
-                .numeroDeHospedes(hotel.numeroDeQuartos())
+                .numeroDeHospedes(hotel.numeroDeHospedes())
                 .numeroDeQuartos(hotel.numeroDeQuartos())
+                .endereco(hotel.endereco())
+                .precoPorNoite(hotel.precoPorNoite())
+                .avaliacao(hotel.avaliacao())
                 .cidade(hotel.cidade())
                 .comodidades(hotel.comodidades().stream().map(ComodidadeConverter::entidade).collect(Collectors.toList()))
                 .build();

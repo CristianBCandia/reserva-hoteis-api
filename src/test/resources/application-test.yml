@@ -1,0 +1,88 @@
+spring:
+  application:
+    name: hotel-reservas-test
+  datasource:
+    url: jdbc:h2:mem:testdb;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ''
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate.dialect: org.hibernate.dialect.H2Dialect
+
+  kafka:
+    admin:
+      auto-create-topics: false
+    bootstrap-servers: localhost:9092
+    consumer:
+      group-id: test-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      properties:
+        max.poll.interval.ms: 300000
+    producer:
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.apache.kafka.common.serialization.StringSerializer
+
+    topics:
+      checkin: ${KAFKA_TOPIC_CHECKIN:checkin}
+      checkout: ${KAFKA_TOPIC_CHECKOUT:checkout}
+      confirmacao-reserva: ${KAFKA_TOPIC_CONFIRMACAO_RESERVA:confirmacao-reserva}
+      criacao-reserva: ${KAFKA_TOPIC_CRIACAO_RESERVA:criacao-reserva}
+      notificacao: ${KAFKA_TOPIC_NOTIFICACAO:notificacao}
+    groups:
+      checkin: ${KAFKA_GROUP_CHECKIN:checkin-group}
+      checkout: ${KAFKA_GROUP_CHECKOUT:checkout-group}
+      confirmacao-reserva: ${KAFKA_GROUP_CONFIRMACAO_RESERVA:confirmacao-reserva-group}
+      criacao-reserva: ${KAFKA_GROUP_CRIACAO_RESERVA:criacao-reserva-group}
+      notificacao: ${KAFKA_GROUP_NOTIFICACAO:notificacao-group}
+
+  redis:
+    host: localhost
+    port: 6379
+    serializers:
+      json:
+        enabled: true
+
+  mail:
+    host: localhost
+    port: 25
+    username: test
+    password: test
+
+logging:
+  logstash:
+    enabled: false  # Desativa o Logstash
+
+  level:
+    root: ERROR  # Reduz o nível de log para apenas erros
+    org.springframework: ERROR  # Suprime logs de inicialização do Spring
+    com.cristian.teste.reservas.hoteis: ERROR  # Limita os logs da sua aplicação
+
+management:
+  metrics:
+    export:
+      prometheus:
+        enabled: false  # Desativa a exportação de métricas para Prometheus
+
+  endpoints:
+    web:
+      exposure:
+        exclude: prometheus  # Exclui o endpoint de Prometheus
+
+      # Configurações específicas para desativar Loki e Grafana
+      logging:
+        logstash:
+          enabled: false
+
+      loki:
+        enabled: false  # Desativa Loki
+
+      grafana:
+        enabled: false  # Desativa Grafana
+
+
+

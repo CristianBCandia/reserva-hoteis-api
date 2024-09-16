@@ -25,7 +25,6 @@ public class NotificacaoConsumer {
     private final NotificacaoService notificacaoService;
 
     @RetryableTopic(
-            attempts = "4",
             backoff = @Backoff(delay = 3000),
             dltTopicSuffix = "-dlq",
             autoCreateTopics = "false",

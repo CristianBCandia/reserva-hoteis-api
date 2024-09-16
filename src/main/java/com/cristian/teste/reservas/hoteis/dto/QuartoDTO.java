@@ -4,8 +4,8 @@ public record QuartoDTO(
     Long id,
     HotelDTO hotel,
     String tipoQuarto,
-    double precoPorNoite,
-    int maxHospedes,
-    boolean disponivel
+    Double precoPorNoite,
+    Integer maxHospedes,
+    Boolean disponivel
 ) {
 }

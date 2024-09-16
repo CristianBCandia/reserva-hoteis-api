@@ -25,7 +25,6 @@ public class ReservaConsumer {
     private final ReservaService reservaService;
 
     @RetryableTopic(
-            attempts = "4",
             backoff = @Backoff(delay = 3000),
             dltTopicSuffix = "-dlq",
             autoCreateTopics = "false",
@@ -41,9 +40,9 @@ public class ReservaConsumer {
     }
 
     @RetryableTopic(
-            attempts = "3",
             backoff = @Backoff(delay = 3000),
             dltTopicSuffix = "-dlq",
+            autoCreateTopics = "false",
             kafkaTemplate = "retryableTopicKafkaTemplate"
     )
     @KafkaListener(topics = "${KAFKA_TOPIC_CONFIRMACAO_RESERVA:confirmacao-reserva}", groupId = "${KAFKA_GROUP_CONFIRMACAO_RESERVA:confirmacao-reserva-group}", containerFactory = "containerFactory")
@@ -56,9 +55,9 @@ public class ReservaConsumer {
     }
 
     @RetryableTopic(
-            attempts = "4",
             backoff = @Backoff(delay = 3000),
             dltTopicSuffix = "-dlq",
+            autoCreateTopics = "false",
             kafkaTemplate = "retryableTopicKafkaTemplate"
     )
     @KafkaListener(topics = "${KAFKA_TOPIC_CHECKIN:checkin}", groupId = "${KAFKA_GROUP_CHECKIN:checkin-group}", containerFactory = "containerFactory")
@@ -71,9 +70,9 @@ public class ReservaConsumer {
     }
 
     @RetryableTopic(
-            attempts = "4",
             backoff = @Backoff(delay = 3000),
             dltTopicSuffix = "-dlq",
+            autoCreateTopics = "false",
             kafkaTemplate = "retryableTopicKafkaTemplate"
     )
     @KafkaListener(topics = "${KAFKA_TOPIC_CHECKOUT:checkout}", groupId = "${KAFKA_GROUP_CHECKOUT:checkout-group}", containerFactory = "containerFactory")

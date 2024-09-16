@@ -1,8 +1,6 @@
 package com.cristian.teste.reservas.hoteis.service;
 
 import com.cristian.teste.reservas.hoteis.converter.NotificacaoConverter;
-import com.cristian.teste.reservas.hoteis.dto.NotificacaoDTO;
-import com.cristian.teste.reservas.hoteis.enums.StatusReserva;
 import com.cristian.teste.reservas.hoteis.enums.TipoNotificacao;
 import com.cristian.teste.reservas.hoteis.model.Notificacao;
 import com.cristian.teste.reservas.hoteis.model.Reserva;
@@ -13,6 +11,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 
@@ -25,6 +24,7 @@ public class NotificacaoService {
     private final NotificacaoProducer notificacaoProducer;
     private final NotificacaoRepository notificacaoRepository;
 
+    @Transactional
     public void criarNotificacao(Reserva reserva, TipoNotificacao tipoNotificacao) {
         var notificacao = gerarNotificacao(reserva, tipoNotificacao);
         notificacaoRepository.save(notificacao);

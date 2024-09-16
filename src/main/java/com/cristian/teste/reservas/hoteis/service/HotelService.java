@@ -4,7 +4,6 @@ import com.cristian.teste.reservas.hoteis.converter.HotelConverter;
 import com.cristian.teste.reservas.hoteis.dto.HotelDTO;
 import com.cristian.teste.reservas.hoteis.exception.CriterioInvalidoException;
 import com.cristian.teste.reservas.hoteis.exception.HotelNaoEncontradoException;
-import com.cristian.teste.reservas.hoteis.model.Hotel;
 import com.cristian.teste.reservas.hoteis.repository.HotelRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -29,7 +28,7 @@ public class HotelService {
     public HotelDTO buscarHotel(Long id) {
         return HotelConverter.dto(hotelRepository.findById(id).orElseThrow(() -> {
             log.error("ERRO - Hotel não encontrado para o id={}", id);
-            return new HotelNaoEncontradoException("Hotel não econtrado para o id " + id);
+            return new HotelNaoEncontradoException("Hotel não encontrado para o id " + id);
         }));
     }
 

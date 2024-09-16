@@ -88,10 +88,8 @@ spring:
         enabled: ${REDIS_JSON_SERIALIZER_ENABLED:true}
 
 logging:
-  logstash:
-    url: ${LOGSTASH_URL:http://localhost:5044}
   level:
-    org.springframework.jdbc: ${LOGGING_LEVEL_SPRING_JDBC:DEBUG}
-    org.hibernate.SQL: ${LOGGING_LEVEL_HIBERNATE_SQL:DEBUG}
-    org.springframework.cache: ${LOGGING_LEVEL_SPRING_CACHE:DEBUG}
-    org.springframework.data.redis: ${LOGGING_LEVEL_SPRING_REDIS:DEBUG}
+    org.springframework.jdbc: ${LOGGING_LEVEL_SPRING_JDBC:INFO}
+    org.hibernate.SQL: ${LOGGING_LEVEL_HIBERNATE_SQL:INFO}
+    org.springframework.cache: ${LOGGING_LEVEL_SPRING_CACHE:INFO}
+    org.springframework.data.redis: ${LOGGING_LEVEL_SPRING_REDIS:INFO}

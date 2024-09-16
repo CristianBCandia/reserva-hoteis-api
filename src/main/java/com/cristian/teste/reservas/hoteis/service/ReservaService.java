@@ -5,25 +5,25 @@ import com.cristian.teste.reservas.hoteis.dto.ReservaDTO;
 import com.cristian.teste.reservas.hoteis.enums.StatusReserva;
 import com.cristian.teste.reservas.hoteis.enums.TipoNotificacao;
 import com.cristian.teste.reservas.hoteis.exception.ReservaIndisponivelException;
+import com.cristian.teste.reservas.hoteis.exception.TipoOperacaoInvalidaException;
 import com.cristian.teste.reservas.hoteis.model.Reserva;
 import com.cristian.teste.reservas.hoteis.producer.ReservaProducer;
 import com.cristian.teste.reservas.hoteis.repository.ReservaRepository;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.common.errors.ResourceNotFoundException;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static com.cristian.teste.reservas.hoteis.enums.TipoOperacaoReserva.*;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class ReservaService {
-
-    private static final Logger logger = LoggerFactory.getLogger(ReservaService.class);
 
     private final ReservaRepository reservaRepository;
     private final ReservaProducer reservaProducer;
@@ -35,7 +35,12 @@ public class ReservaService {
     }
 
     public void processaConfirmacaoReserva(Long id) {
-        reservaProducer.sendMessage(buscaReservaPorId(id), CONFIRMACAO);
+        var reserva = buscaReservaPorId(id);
+        if(Objects.isNull(reserva.getDataCheckIn())) {
+            log.error("Erro - confirmação de reserva sem data checkin");
+            throw new TipoOperacaoInvalidaException("Erro: Data checkin é obrigatório para confirmar a reserva.");
+        }
+        reservaProducer.sendMessage(reserva, CONFIRMACAO);
     }
 
     public void processaCheckIn(Long id){
@@ -81,10 +86,10 @@ public class ReservaService {
     }
 
     public ReservaDTO buscaReservaPorId(Long id) {
-        logger.info("Buscando reserva na base de dados");
+        log.info("Buscando reserva na base de dados");
         return ReservaConverter.dto(reservaRepository.findById(id)
                 .orElseThrow(()-> {
-                    logger.info("Reserva de id {}, não encontrada!", id);
+                    log.info("Reserva de id {}, não encontrada!", id);
                     return new ResourceNotFoundException("Reserva não encontrada!");
                 }));
     }
