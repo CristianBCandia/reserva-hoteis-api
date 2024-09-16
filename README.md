@@ -42,9 +42,6 @@ public class Hotel {
 ### Exceções Personalizadas
 Implementei exceções customizadas e um **Exception Handler** global para fornecer mensagens de erro mais claras e padronizadas para os clientes da API, além de facilitar o debug em caso de falhas.
 
-### Exceções Personalizadas
-Implementei exceções customizadas e um **Exception Handler** global para fornecer mensagens de erro mais claras e padronizadas para os clientes da API, além de facilitar o debug em caso de falhas.
-
 ### Docker Compose
 
 Para rodar a aplicação localmente, utilize o Docker Compose. Na raiz do projeto, execute o comando:
