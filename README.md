@@ -42,20 +42,16 @@ public class Hotel {
 ### Exceções Personalizadas
 Implementei exceções customizadas e um **Exception Handler** global para fornecer mensagens de erro mais claras e padronizadas para os clientes da API, além de facilitar o debug em caso de falhas.
 
-### Kafka
-As operações de criação de reservas, confirmação, check-in e check-out são feitas de forma assíncrona utilizando **Kafka**. Isso garante que o sistema seja resiliente e performe bem, mesmo com um grande volume de requisições simultâneas.
-
 ### Exceções Personalizadas
 Implementei exceções customizadas e um **Exception Handler** global para fornecer mensagens de erro mais claras e padronizadas para os clientes da API, além de facilitar o debug em caso de falhas.
 
-### Kafka
-As operações de criação de reservas, confirmação, check-in e check-out são feitas de forma assíncrona utilizando **Kafka**. Isso garante que o sistema seja resiliente e performe bem, mesmo com um grande volume de requisições simultâneas.
+### Docker Compose
 
-### Prometheus, Grafana e Loki
+Para rodar a aplicação localmente, utilize o Docker Compose. Na raiz do projeto, execute o comando:
 
-- **Prometheus**: Utilizado para monitoramento e coleta de métricas. Configurado com um volume persistente para garantir que as métricas sejam armazenadas e possam ser consultadas posteriormente.
-
-- **Grafana**: Usado para visualização das métricas coletadas pelo Prometheus. Configurado para usar o Loki como fonte de dados para logs, permitindo a correlação de métricas e logs na mesma interface. Importei dois dashboards no Grafana: o **4701** e o **14430**. Eles fornecem visualizações detalhadas das métricas e logs da aplicação.
+```bash
+docker-compose up -d
+```
 
 ### Exemplo de Dashboards Importados
 
@@ -75,52 +71,6 @@ Para que o dashboard do micrometer funcione a config das variáveis deve estar c
 
 ### Dashboard Metricas Spring
 ![Grafana Dashboards](img/dash-metricas.png)
-
-
-- **Loki**: Sistema de agregação de logs que coleta e armazena logs gerados pela aplicação e outros serviços. Trabalha em conjunto com o Grafana para permitir a visualização e análise de logs.
-
-### Redis
-
-O **Redis** é utilizado como um cache para melhorar a performance da aplicação, reduzindo o número de consultas ao banco de dados PostgreSQL. Armazena em memória dados frequentemente acessados, o que diminui o tempo de resposta e melhora a eficiência da aplicação.
-
-### PostgreSQL
-
-Escolhi o **PostgreSQL** como banco de dados relacional para a aplicação de reservas de hotéis. Em comparação com o MongoDB, o PostgreSQL oferece:
-
-- **Escalabilidade Horizontal**: Capacidade de adicionar mais servidores para distribuir a carga de trabalho.
-- **Consistência de Dados**: Suporte a transações ACID, garantindo maior consistência e integridade dos dados.
-- **Replicação Sincrona**: Replicação de dados de forma síncrona, proporcionando maior segurança e disponibilidade.
-
-### Docker Compose
-
-Para rodar a aplicação localmente, utilize o Docker Compose. Na raiz do projeto, execute o comando:
-
-```bash
-docker-compose up -d
-```
-
-### O que eu faria se tivesse mais tempo?
-
-Devido a questões de tempo e custo, não implementei alguns aspectos avançados na AWS para este projeto. No entanto, se tivesse mais tempo e fosse um projeto real, aqui estão algumas melhorias e implementações que eu consideraria:
-
-1. **Deploy na AWS com Elastic Beanstalk**:
-    - Implementaria o deploy da aplicação na AWS utilizando o **AWS Elastic Beanstalk**. Essa plataforma facilita o gerenciamento da aplicação, incluindo o provisionamento de recursos, monitoramento e escalabilidade.
-    - **Elastic Beanstalk** permitiria gerenciar facilmente o ambiente da aplicação, oferecendo suporte para balanceamento de carga e gerenciamento de instâncias, sem precisar configurar manualmente a infraestrutura subjacente.
-
-2. **Auto-Scaling**:
-    - Configuraria o **auto-scaling** para a aplicação. Isso garantiria que a aplicação possa escalar automaticamente em resposta a mudanças na carga de trabalho, aumentando ou diminuindo o número de instâncias conforme a demanda.
-    - O auto-scaling ajudaria a manter a performance da aplicação e a reduzir os custos operacionais, ajustando os recursos de forma dinâmica.
-
-3. **Replicação de Banco de Dados**:
-    - Criaria a configuração para **réplicas do banco de dados** no PostgreSQL. A replicação de banco de dados garantiria alta disponibilidade e redundância, permitindo que o sistema continue funcionando mesmo em caso de falha em uma das instâncias.
-    - Isso também ajudaria a distribuir a carga de leitura e melhorar a performance geral do banco de dados.
-
-4. **Divisão em Microserviços**:
-    - Caso a aplicação precisasse escalar muito, dividiria a aplicação em **microserviços**. Por exemplo, poderia criar um microserviço dedicado para a busca e comparação de hotéis e outro para o gerenciamento de reservas.
-    - Essa abordagem permitiria escalar separadamente diferentes partes da aplicação, conforme as necessidades específicas de cada serviço. Isso proporcionaria uma arquitetura mais flexível e escalável, além de melhorar a manutenibilidade e o isolamento de falhas.
-
-Essas melhorias ajudariam a criar uma solução mais robusta e escalável, adequada para ambientes de produção e para lidar com grandes volumes de tráfego e dados.
-
 
 ### Gerando Gráficos no Grafana
 
@@ -148,3 +98,25 @@ No Grafana, você pode criar e visualizar gráficos e dashboards personalizados 
     - Após configurar e personalizar o dashboard, clique no ícone de **disquete** no canto superior direito para salvar as alterações e dar um nome ao dashboard.
 
 Os dashboards importados fornecem uma visão rápida e compreensiva das métricas da aplicação e são extremamente úteis para monitorar a performance e a saúde do sistema.
+
+### O que eu faria se tivesse mais tempo?
+
+Devido a questões de tempo e custo, não implementei alguns aspectos avançados na AWS para este projeto. No entanto, se tivesse mais tempo e fosse um projeto real, aqui estão algumas melhorias e implementações que eu consideraria:
+
+1. **Deploy na AWS com Elastic Beanstalk**:
+    - Implementaria o deploy da aplicação na AWS utilizando o **AWS Elastic Beanstalk**. Essa plataforma facilita o gerenciamento da aplicação, incluindo o provisionamento de recursos, monitoramento e escalabilidade.
+    - **Elastic Beanstalk** permitiria gerenciar facilmente o ambiente da aplicação, oferecendo suporte para balanceamento de carga e gerenciamento de instâncias, sem precisar configurar manualmente a infraestrutura subjacente.
+
+2. **Auto-Scaling**:
+    - Configuraria o **auto-scaling** para a aplicação. Isso garantiria que a aplicação possa escalar automaticamente em resposta a mudanças na carga de trabalho, aumentando ou diminuindo o número de instâncias conforme a demanda.
+    - O auto-scaling ajudaria a manter a performance da aplicação e a reduzir os custos operacionais, ajustando os recursos de forma dinâmica.
+
+3. **Replicação de Banco de Dados**:
+    - Criaria a configuração para **réplicas do banco de dados** no PostgreSQL. A replicação de banco de dados garantiria alta disponibilidade e redundância, permitindo que o sistema continue funcionando mesmo em caso de falha em uma das instâncias.
+    - Isso também ajudaria a distribuir a carga de leitura e melhorar a performance geral do banco de dados.
+
+4. **Divisão em Microserviços**:
+    - Caso a aplicação precisasse escalar muito, dividiria a aplicação em **microserviços**. Por exemplo, poderia criar um microserviço dedicado para a busca e comparação de hotéis e outro para o gerenciamento de reservas.
+    - Essa abordagem permitiria escalar separadamente diferentes partes da aplicação, conforme as necessidades específicas de cada serviço. Isso proporcionaria uma arquitetura mais flexível e escalável, além de melhorar a manutenibilidade e o isolamento de falhas.
+
+Essas melhorias ajudariam a criar uma solução mais robusta e escalável, adequada para ambientes de produção e para lidar com grandes volumes de tráfego e dados.
