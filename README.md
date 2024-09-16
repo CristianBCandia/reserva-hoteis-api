@@ -95,6 +95,10 @@ Escolhi o **PostgreSQL** como banco de dados relacional para a aplicação de re
 
 Para rodar a aplicação localmente, utilize o Docker Compose. Na raiz do projeto, execute o comando:
 
+```bash
+docker-compose up -d
+```
+
 ### O que eu faria se tivesse mais tempo?
 
 Devido a questões de tempo e custo, não implementei alguns aspectos avançados na AWS para este projeto. No entanto, se tivesse mais tempo e fosse um projeto real, aqui estão algumas melhorias e implementações que eu consideraria:
@@ -117,10 +121,6 @@ Devido a questões de tempo e custo, não implementei alguns aspectos avançados
 
 Essas melhorias ajudariam a criar uma solução mais robusta e escalável, adequada para ambientes de produção e para lidar com grandes volumes de tráfego e dados.
 
-
-```bash
-docker-compose up -d
-```
 
 ### Gerando Gráficos no Grafana
 
