@@ -116,4 +116,15 @@ Devido a questões de tempo e custo, não implementei alguns aspectos avançados
     - Caso a aplicação precisasse escalar muito, dividiria a aplicação em **microserviços**. Por exemplo, poderia criar um microserviço dedicado para a busca e comparação de hotéis e outro para o gerenciamento de reservas.
     - Essa abordagem permitiria escalar separadamente diferentes partes da aplicação, conforme as necessidades específicas de cada serviço. Isso proporcionaria uma arquitetura mais flexível e escalável, além de melhorar a manutenibilidade e o isolamento de falhas.
 
+5. **Infraestrutura Como Código**:
+    - Para um melhor controle sobre o provisionamento da infraestrutura, optaria pela da criação da infra via terraform automatizando toda criação dos recursos tendo tanto o versionamento de tudo como também um histórico da evolução da infraestrutura do projeto.
+
+6. **Melhoria dos testes**:
+    - Por conta do tempo, faltaram alguns testes, em uma aplicação real isso não aconteceria pois ela poderia depender de um mínimo de cobertura de código e qualidade, portanto eu cobriria completamente todas as regras da aplicação baseado em uma pirâmide de testes, com todo código coberto de testes unitários e testes de integração para testar os fluxos mais importantes e testes e2e para testar se os contratos estabelecidos estavam sendo devidamete correspondidos.
+
+7. **Threads**:
+    - Supodo que estamos em uma aplicação real, com base nas métricas de tempo de resposta das requisições e utilização das trheads pensaria na possíbilidade da utilização de web flux com threads não bloqueantes otimizando a utilização das mesmas, porém esse recurso traz uma complexidade a mais para a aplicação que ao meu ver deve ser utilizado com cautela para não perder em outros pontos uma vez que algumas transações precisam ser atomicas e o debugg e rastreamento se torna mais complexo também.
+
+
+
 Essas melhorias ajudariam a criar uma solução mais robusta e escalável, adequada para ambientes de produção e para lidar com grandes volumes de tráfego e dados.
